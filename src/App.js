@@ -25,11 +25,7 @@ const GREEN_LIGHT = {
 
 const App = () => {
   // Initially the light is Green
-  const [lightStatus, setLightStatus] = useState({
-    RedOn: false,
-    YellowOn: false,
-    GreenOn: true,
-  });
+  const [lightStatus, setLightStatus] = useState(GREEN_LIGHT);
 
   // Run once to setup the state machine
   useEffect(() => {
@@ -37,9 +33,19 @@ const App = () => {
 
     service.onTransition(state => {
       console.log(state);
-      // Your code here to change lightStatus when the 
-      //   state of the state machine changes
-
+      switch (state.value) {
+        case "green":
+          setLightStatus(GREEN_LIGHT);
+          break;
+        case "yellow":
+          setLightStatus(YELLOW_LIGHT);
+          break;
+        case "red":
+          setLightStatus(RED_LIGHT);
+          break;
+        default:
+          console.log("Invalid state reached");
+      };
     });
   }, [])
 
